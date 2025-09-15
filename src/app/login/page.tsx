@@ -1,9 +1,22 @@
 "use client";
-import { Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+
+const api = axios.create({
+  baseURL: "https://api.gertu.mn:3000/api",
+  withCredentials: true, // cookie-г автоматаар хавсаргана
+});
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string()
@@ -14,18 +27,26 @@ const LoginSchema = Yup.object().shape({
 
 const Login = () => {
   const router = useRouter();
-  const getLogin = async (values: { email: string; password: string }) => {
-    const response = await axios.post(
-      "https://api.gertu.mn:3000/api/auth/login",
-      values
-    );
-    console.log(response);
-    document.cookie = response.data;
 
-    localStorage.setItem("token", response.data.access_token);
-    // localStorage.setItem("address", response.data.data);
-    localStorage.setItem("user", JSON.stringify(response.data.user));
-    router.push("/");
+  const getLogin = async (values: { email: string; password: string }) => {
+    try {
+      const response = await api.post("/auth/login", values, {
+        withCredentials: true,
+      });
+
+      if (response.data.access_token) {
+        localStorage.setItem("token", response.data.access_token);
+      }
+
+      if (response.data.user) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+      }
+
+      console.log("Login амжилттай:", response.data);
+      router.push("/");
+    } catch (err) {
+      console.error("Login алдаа:", err);
+    }
   };
 
   return (
