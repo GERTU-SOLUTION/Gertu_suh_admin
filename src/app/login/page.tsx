@@ -20,6 +20,8 @@ const Login = () => {
       values
     );
     console.log(response);
+    document.cookie = response.data;
+
     localStorage.setItem("token", response.data.access_token);
     // localStorage.setItem("address", response.data.data);
     localStorage.setItem("user", JSON.stringify(response.data.user));
