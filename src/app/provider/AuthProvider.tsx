@@ -7,12 +7,12 @@ import { useJwt } from "react-jwt";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const token =
-    (typeof window != "undefined" && localStorage.getItem("token")) || "";
+    (typeof window != "undefined" && localStorage.getItem("access_token")) || "";
   const { isExpired } = useJwt(token!);
   const router = useRouter();
   useEffect(() => {
     if (!token || isExpired) {
-      router.push("/Login");
+      router.push("/login");
     }
   }, [token, isExpired]);
 

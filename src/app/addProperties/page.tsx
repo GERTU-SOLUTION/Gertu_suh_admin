@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { Radio } from "antd";
-import axios from "axios";
+import api from "../api";
 
 type Properties = {
-  building_id: string;
+  building_id: number;
   floor: string;
   ownership_status: string;
   property_type: string;
@@ -14,7 +14,7 @@ type Properties = {
 
 const AddProperties: React.FC = () => {
   const [values, setValues] = useState<Properties>({
-    building_id: "",
+    building_id: 0,
     floor: "",
     ownership_status: "owned",
     property_type: "residential",
@@ -25,15 +25,25 @@ const AddProperties: React.FC = () => {
     const { name, value } = e.target;
     setValues((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: name === "building_id" ? Number(value) : value,
     }));
   };
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(
-        "https://api.gertu.mn:3000/api/properties",
-        values
+      console.log(values);
+      const response = await api.post(
+        "/properties",
+        {
+          building_id: Number(values.building_id),
+          floor: values.floor,
+          ownership_status: values.ownership_status,
+          property_type: values.property_type,
+          unit_number: values.unit_number,
+        },
+        {
+          withCredentials: true,
+        }
       );
       console.log("✅ Success:", response.data);
     } catch (error) {
@@ -50,7 +60,7 @@ const AddProperties: React.FC = () => {
           <input
             className="border p-2 rounded-xl"
             name="building_id"
-            value={values.building_id}
+            value={Number(values.building_id)}
             onChange={handleChange}
           />
         </div>
