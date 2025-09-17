@@ -37,7 +37,7 @@ const Login = () => {
       }
 
       console.log("Login амжилттай:", response.data);
-      router.push("/addProperties");
+      router.push("/addPreRegister");
     } catch (err) {
       console.error("Login алдаа:", err);
     }
