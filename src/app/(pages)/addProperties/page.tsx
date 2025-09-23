@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Radio } from "antd";
-import api from "../api";
+import api from "../../api";
 
 type Properties = {
   building_id: number;

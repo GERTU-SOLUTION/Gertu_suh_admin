@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -36,10 +37,10 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
 
-      console.log("Login амжилттай:", response.data);
-      router.push("/addPreRegister");
+      console.log("Login success:", response.data);
+      router.push("/dashboard");
     } catch (err) {
-      console.error("Login алдаа:", err);
+      console.error("Login error:", err);
     }
   };
 
@@ -65,7 +66,7 @@ const Login = () => {
               <div>
                 <Field
                   name="email"
-                  placeholder="Enter your email adress"
+                  placeholder="Enter your email address"
                   className="border rounded-xl p-2 w-full"
                 />
                 {errors.email ? (
@@ -92,9 +93,12 @@ const Login = () => {
           )}
         </Formik>
       </div>
-      {/* <div className="w-3/5 h-screen bg-blue-300"> */}
-      {/* <img src="./bicycle.png" /> */}
-      {/* </div> */}
+      <div className="w-3/5 h-screen border-l border-gray-200 flex justify-center items-center">
+        <img
+          alt="as"
+          src="https://play-lh.googleusercontent.com/lRf7Q9KtUJQctmqhdtFKJnzLfXpC91RpiPTN2kglDJvfreaZp5z6SKr2qZMlHxQEYHsLWPI531PrZhwTE1VXaA=w240-h480-rw"
+        />
+      </div>
     </div>
   );
 };
