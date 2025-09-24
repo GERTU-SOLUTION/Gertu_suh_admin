@@ -37,7 +37,6 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
 
-      console.log("Login success:", response.data);
       router.push("/dashboard");
     } catch (err) {
       console.error("Login error:", err);
@@ -54,7 +53,6 @@ const Login = () => {
           }}
           validationSchema={LoginSchema}
           onSubmit={(values) => {
-            console.log(values);
             getLogin(values);
           }}
         >

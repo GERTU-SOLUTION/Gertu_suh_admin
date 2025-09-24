@@ -105,12 +105,12 @@ export default function RootLayout({
           />
         </div>
 
-        <Switch
+        {/* <Switch
           checked={theme === "dark"}
           onChange={changeTheme}
           checkedChildren="Dark"
           unCheckedChildren="Light"
-        />
+        /> */}
       </div>
 
       <div className="flex">

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useState, createContext, useContext, useEffect } from "react";
 import api from "../api";
@@ -41,7 +42,6 @@ export const ComplexesProvider = ({
       setLoading(true);
       const response = await api.get("/complexes");
       const complexes = response.data.data as Complex[];
-      console.log(complexes);
       setComplexes(complexes);
     } catch (error) {
       console.error("Failed to load complexes:", error);
@@ -56,7 +56,13 @@ export const ComplexesProvider = ({
 
   return (
     <ComplexesContext.Provider value={{ complexes }}>
-      {loading ? <div>Loading...</div> : children}
+      {loading ? (
+        <div className="flex justify-center items-center h-full">
+          <img src="./gertu_bounce_letters.gif" alt="logo" />
+        </div>
+      ) : (
+        children
+      )}
     </ComplexesContext.Provider>
   );
 };

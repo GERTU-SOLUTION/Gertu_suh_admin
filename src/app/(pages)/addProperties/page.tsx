@@ -31,7 +31,6 @@ const AddProperties: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      console.log(values);
       const response = await api.post(
         "/properties",
         {
