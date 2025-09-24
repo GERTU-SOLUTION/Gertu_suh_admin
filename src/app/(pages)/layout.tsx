@@ -94,6 +94,7 @@ export default function RootLayout({
           />
           <Select
             value={selectedComplex}
+            placeholder="Gertu"
             style={{ width: 200 }}
             onChange={handleChange1}
             className="text-black"
@@ -122,9 +123,10 @@ export default function RootLayout({
           items={items}
         />
         <div
-          className={
+          className={` w-full ${
             theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
-          }
+          } 
+         `}
         >
           {children}
         </div>
