@@ -163,6 +163,7 @@ const CustomTable: React.FC = () => {
             position: ["bottomCenter"],
           }}
           columns={columns}
+          
           dataSource={dataSource}
           scroll={{ x: "max-content", y: "max-content" }}
           bordered={false}

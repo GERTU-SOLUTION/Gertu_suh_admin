@@ -6,8 +6,7 @@ import {
   createContext,
   useContext,
   useEffect,
-  SetStateAction,
-  Dispatch,
+ 
 } from "react";
 import api from "../api";
 import { parseAsFloat, parseAsString, useQueryState } from "nuqs";

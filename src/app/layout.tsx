@@ -4,6 +4,7 @@ import "./globals.css";
 import AuthProvider from "./provider/AuthProvider";
 import { ComplexesProvider } from "./provider/ComplexProvider";
 import { PropertiesProvider } from "./provider/PropertiesProvider";
+import { BuildingProvider } from "./provider/BuildingProvider";
 
 export default function RootLayout({
   children,
@@ -14,11 +15,13 @@ export default function RootLayout({
     <AuthProvider>
       <NuqsAdapter>
         <ComplexesProvider>
-          <PropertiesProvider>
-            <html>
-              <body>{children}</body>
-            </html>
-          </PropertiesProvider>
+          <BuildingProvider>
+            <PropertiesProvider>
+              <html>
+                <body>{children}</body>
+              </html>
+            </PropertiesProvider>
+          </BuildingProvider>
         </ComplexesProvider>
       </NuqsAdapter>
     </AuthProvider>

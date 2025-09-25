@@ -12,6 +12,7 @@ import { Menu, Select, Switch } from "antd";
 import { useRouter } from "next/navigation";
 import "../globals.css";
 import { useComplexes } from "../provider/ComplexProvider";
+import { parseAsFloat, useQueryState } from "nuqs";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -35,7 +36,7 @@ const items: MenuItem[] = [
     label: "Байр",
     icon: <HomeOutlined />,
     children: [
-      { key: "/apartments/option1", label: "Option 1" },
+      { key: "/building", label: "Option 1" },
       { key: "/apartments/option2", label: "Option 2" },
     ],
   },
@@ -58,10 +59,14 @@ export default function RootLayout({
   const [selectedComplex, setSelectedComplex] = useState<number | undefined>(
     undefined
   );
+  const [complex, setComplex] = useQueryState(
+    "complex",
+    parseAsFloat.withDefault(1)
+  );
 
   const handleChange1 = (value: number) => {
     setSelectedComplex(value);
-    localStorage.setItem("selectedComplex", String(value));
+    setComplex(value);
   };
   useEffect(() => {
     const saved = localStorage.getItem("selectedComplex");

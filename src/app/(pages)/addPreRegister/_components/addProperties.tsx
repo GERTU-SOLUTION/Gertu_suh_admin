@@ -8,12 +8,13 @@ import {
 
 const AddProperties: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { register, handleSubmit, control } = useForm<PropertyFormValues>();
+  const { control, handleSubmit, reset } = useForm<PropertyFormValues>();
   const { PostProperties } = useProperties();
 
   const onSubmit: SubmitHandler<PropertyFormValues> = (data) => {
     console.log("Submitted data:", data);
     PostProperties(data);
+    reset();
     setIsModalOpen(false);
   };
 
@@ -28,7 +29,7 @@ const AddProperties: React.FC = () => {
         open={isModalOpen}
         footer={null}
         onCancel={() => setIsModalOpen(false)}
-        // style={{ top: 20 }}
+        style={{ top: 20 }}
       >
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -36,37 +37,70 @@ const AddProperties: React.FC = () => {
         >
           <div>
             <label>Bathrooms</label>
-            <Input
-              type="number"
-              step="1"
-              {...register("bathrooms", { valueAsNumber: true })}
+            <Controller
+              name="bathrooms"
+              control={control}
+              defaultValue={0}
+              render={({ field }) => (
+                <Input
+                  type="number"
+                  {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                />
+              )}
             />
           </div>
 
           <div>
             <label>Bedrooms</label>
-            <Input
-              type="number"
-              {...register("bedrooms", { valueAsNumber: true })}
+            <Controller
+              name="bedrooms"
+              control={control}
+              defaultValue={0}
+              render={({ field }) => (
+                <Input
+                  type="number"
+                  {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                />
+              )}
             />
           </div>
 
           <div>
             <label>Building Number</label>
-            <Input type="text" {...register("building_number")} />
+            <Controller
+              name="building_number"
+              control={control}
+              defaultValue=""
+              render={({ field }) => <Input {...field} />}
+            />
           </div>
 
-          {/* <div>
+          <div>
             <label>Complex ID</label>
-            <Input
-              type="number"
-              {...register("complex_id", { valueAsNumber: true })}
+            <Controller
+              name="complex_id"
+              control={control}
+              defaultValue={0}
+              render={({ field }) => (
+                <Input
+                  type="number"
+                  {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                />
+              )}
             />
-          </div> */}
+          </div>
 
           <div>
             <label>Floor</label>
-            <Input type="text" {...register("floor")} />
+            <Controller
+              name="floor"
+              control={control}
+              defaultValue=""
+              render={({ field }) => <Input {...field} />}
+            />
           </div>
 
           <div>
@@ -76,7 +110,11 @@ const AddProperties: React.FC = () => {
               control={control}
               defaultValue="owned"
               render={({ field }) => (
-                <Select {...field} style={{ width: "100%" }}>
+                <Select
+                  value={field.value}
+                  onChange={(value) => field.onChange(value)}
+                  style={{ width: "100%" }}
+                >
                   <Select.Option value="owned">Owned</Select.Option>
                   <Select.Option value="rented">Rented</Select.Option>
                 </Select>
@@ -86,7 +124,12 @@ const AddProperties: React.FC = () => {
 
           <div>
             <label>Phone Number</label>
-            <Input type="text" {...register("phone_number")} />
+            <Controller
+              name="phone_number"
+              control={control}
+              defaultValue=""
+              render={({ field }) => <Input {...field} />}
+            />
           </div>
 
           <div>
@@ -96,7 +139,11 @@ const AddProperties: React.FC = () => {
               control={control}
               defaultValue="residential"
               render={({ field }) => (
-                <Select {...field} style={{ width: "100%" }}>
+                <Select
+                  value={field.value}
+                  onChange={(value) => field.onChange(value)}
+                  style={{ width: "100%" }}
+                >
                   <Select.Option value="residential">Residential</Select.Option>
                   <Select.Option value="commercial">Commercial</Select.Option>
                 </Select>
@@ -106,16 +153,29 @@ const AddProperties: React.FC = () => {
 
           <div>
             <label>Square Meters</label>
-            <Input
-              type="number"
-              step="0.1"
-              {...register("square_meters", { valueAsNumber: true })}
+            <Controller
+              name="square_meters"
+              control={control}
+              defaultValue={0}
+              render={({ field }) => (
+                <Input
+                  type="number"
+                  step="0.1"
+                  {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                />
+              )}
             />
           </div>
 
           <div>
             <label>Unit Number</label>
-            <Input type="text" {...register("unit_number")} />
+            <Controller
+              name="unit_number"
+              control={control}
+              defaultValue=""
+              render={({ field }) => <Input {...field} />}
+            />
           </div>
 
           <div className="mt-4">
