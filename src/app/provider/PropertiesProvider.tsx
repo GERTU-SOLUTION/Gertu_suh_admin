@@ -18,8 +18,15 @@ export type Properties = {
   unit_number: string;
   pre_registered_phone?: string;
   current_owner_id: number;
+  building:Building;
 };
 
+export type Building={
+  complex_id:number;
+  building_name:string;
+  building_number:string;
+  ID:string;
+}
 export type PropertyFormValues = {
   bathrooms: number;
   bedrooms: number;
@@ -69,6 +76,7 @@ export const PropertiesProvider = ({
       setLoading(true);
       const response = await api.get(`/properties?${queryString}`);
       setTotalPage(response.data.meta);
+      console.log(response.data.data,"...................")
       setProperties(response.data.data);
     } catch (error) {
       console.error("Failed to load complexes:", error);

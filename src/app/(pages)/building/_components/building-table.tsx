@@ -10,9 +10,22 @@ import { Building, useBuilding } from "@/app/provider/BuildingProvider";
 import { parseAsFloat, useQueryState } from "nuqs";
 import AddBuilding from "./add-building";
 
+
+type BuildingTableRow = {
+  key: number;
+  id: number;
+  number: string | number;
+  name: string;
+  complex: string;
+  address: string;
+  image: string;
+  hoa: string;
+  phone: string;
+};
+
 const BuildingTable: React.FC = () => {
   const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState<keyof Building | "">("");
+  const [searchedColumn, setSearchedColumn] = useState<keyof BuildingTableRow | "">("");
   const searchInput = useRef<InputRef>(null);
   const [complex] = useQueryState("complex", parseAsFloat.withDefault(1));
 
@@ -31,7 +44,7 @@ const BuildingTable: React.FC = () => {
     }
   }, []);
 
-  const data: Building[] =
+  const data: BuildingTableRow[] =
     building
       ?.filter(
         (b: Building) =>
@@ -53,7 +66,7 @@ const BuildingTable: React.FC = () => {
   const handleSearch = (
     selectedKeys: string[],
     confirm: FilterDropdownProps["confirm"],
-    dataIndex: keyof Building
+    dataIndex: keyof BuildingTableRow
   ) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -66,8 +79,8 @@ const BuildingTable: React.FC = () => {
   };
 
   const getColumnSearchProps = (
-    dataIndex: keyof Building
-  ): TableColumnType<Building> => ({
+    dataIndex: keyof BuildingTableRow
+  ): TableColumnType<BuildingTableRow> => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -153,7 +166,7 @@ const BuildingTable: React.FC = () => {
       ),
   });
 
-  const columns: TableColumnsType<Building> = [
+  const columns: TableColumnsType<BuildingTableRow> = [
     {
       title: "№",
       dataIndex: "number",
@@ -219,7 +232,6 @@ const BuildingTable: React.FC = () => {
   return (
     <div className="w-full flex flex-col gap-4">
       <div>
-        {" "}
         <AddBuilding />
       </div>
 

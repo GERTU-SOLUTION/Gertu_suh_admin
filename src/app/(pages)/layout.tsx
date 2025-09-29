@@ -14,7 +14,6 @@ import { useRouter } from "next/navigation";
 import "../globals.css";
 import { useComplexes } from "../provider/ComplexProvider";
 import { parseAsFloat, useQueryState } from "nuqs";
-import { ComplexesProvider } from "../provider/ComplexProvider";
 import { PropertiesProvider } from "../provider/PropertiesProvider";
 import { BuildingProvider } from "../provider/BuildingProvider";
 import { UserProvider } from "../provider/UserProvider";
@@ -91,7 +90,6 @@ export default function RootLayout({
   };
 
   return (
-       <ComplexesProvider>
           <UserProvider>
             <BuildingProvider>
               <PropertiesProvider>
@@ -103,7 +101,7 @@ export default function RootLayout({
       >
         <div className="flex gap-2 items-center">
           <img
-            src="https://play-lh.googleusercontent.com/lRf7Q9KtUJQctmqhdtFKJnzLfXpC91RpiPTN2kglDJvfreaZp5z6SKr2qZMlHxQEYHsLWPI531PrZhwTE1VXaA=w240-h480-rw"
+          src="./gertu_logo.png"
             width={28}
             alt="gertu_logo"
           />
@@ -150,6 +148,5 @@ export default function RootLayout({
           </PropertiesProvider>
             </BuildingProvider>
           </UserProvider>
-        </ComplexesProvider>
   );
 }

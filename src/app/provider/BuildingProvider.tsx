@@ -25,6 +25,7 @@ export type HOA = {
 };
 
 export type Complex = {
+  id: any;
   ID: number;
   CreatedAt: string;
   UpdatedAt: string;
@@ -37,6 +38,7 @@ export type Complex = {
 };
 
 export type Building = {
+  // [x: string]: string;
   id: number;
   complex_id: number;
   name: string;

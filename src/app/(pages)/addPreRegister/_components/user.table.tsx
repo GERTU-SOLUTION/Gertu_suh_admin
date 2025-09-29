@@ -16,31 +16,31 @@ const UserTable: React.FC = () => {
     { title: "Last Name", dataIndex: "last_name", key: "last_name" },
     { title: "Phone", dataIndex: "mobile_phone", key: "mobile_phone" },
     { title: "Email", dataIndex: "email", key: "email" },
-    { title: "Role", dataIndex: "role", key: "role" },
-    {
-      title: "Email Verified",
-      dataIndex: "email_verified",
-      key: "email_verified",
-      render: (val: boolean) => (val ? "✅" : "-"),
-    },
-    {
-      title: "Phone Verified",
-      dataIndex: "phone_verified",
-      key: "phone_verified",
-      render: (val: boolean) => (val ? "✅" : "-"),
-    },
-    {
-      title: "Created At",
-      dataIndex: "created_at",
-      key: "created_at",
-      render: (date: string) => new Date(date).toLocaleString(),
-    },
-    {
-      title: "Updated At",
-      dataIndex: "updated_at",
-      key: "updated_at",
-      render: (date: string) => new Date(date).toLocaleString(),
-    },
+    // { title: "Role", dataIndex: "role", key: "role" },
+    // {
+    //   title: "Email Verified",
+    //   dataIndex: "email_verified",
+    //   key: "email_verified",
+    //   render: (val: boolean) => (val ? "✅" : "-"),
+    // },
+    // {
+    //   title: "Phone Verified",
+    //   dataIndex: "phone_verified",
+    //   key: "phone_verified",
+    //   render: (val: boolean) => (val ? "✅" : "-"),
+    // },
+    // {
+    //   title: "Created At",
+    //   dataIndex: "created_at",
+    //   key: "created_at",
+    //   render: (date: string) => new Date(date).toLocaleString(),
+    // },
+    // {
+    //   title: "Updated At",
+    //   dataIndex: "updated_at",
+    //   key: "updated_at",
+    //   render: (date: string) => new Date(date).toLocaleString(),
+    // },
     {
       title: "Action",
       key: "action",
@@ -68,7 +68,7 @@ const UserTable: React.FC = () => {
   ];
 
   return (
-    <div className="w-[80%] mt-10">
+    <div className="w-full mt-5 lg:w-[60%]">
       <AntTable<User>
         className={`
         [&_.ant-table-thead>tr>th]:bg-gray-50
@@ -87,7 +87,6 @@ const UserTable: React.FC = () => {
           onChange: (p) => setPage(p),
           position: ["bottomCenter"],
         }}
-        scroll={{ x: "max-content" }}
       />
     </div>
   );

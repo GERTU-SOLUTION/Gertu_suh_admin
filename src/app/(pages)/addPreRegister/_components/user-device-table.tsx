@@ -35,7 +35,7 @@ export const UserDeviceTable = () => {
   ];
 
   return (
-    <div className="mt-10">
+    <div className="mt-5">
       <p>Оршин суугчийн тээврийн хэрэгсэл</p>
       <Table dataSource={dataSource} columns={columns} pagination={false} />
     </div>
