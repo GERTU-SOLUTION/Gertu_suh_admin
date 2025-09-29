@@ -1,13 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import {
-  useState,
-  createContext,
-  useContext,
-  useEffect,
- 
-} from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 import api from "../api";
 import { parseAsFloat, parseAsString, useQueryState } from "nuqs";
 
@@ -23,6 +17,7 @@ export type Properties = {
   property_type: string;
   unit_number: string;
   pre_registered_phone?: string;
+  current_owner_id: number;
 };
 
 export type PropertyFormValues = {
@@ -37,7 +32,7 @@ export type PropertyFormValues = {
   square_meters: number;
   unit_number: string;
 };
-type TotalPages = {
+export type TotalPages = {
   limit: number;
   page: number;
   total: number;
@@ -85,7 +80,7 @@ export const PropertiesProvider = ({
   const PostProperties = async (value: PropertyFormValues) => {
     try {
       const response = await api.post("/properties/pre-register", value);
-      console.log(response.data.data);
+      console.log(response.data.data, "..............................");
     } catch (error) {
       console.log(error);
     }

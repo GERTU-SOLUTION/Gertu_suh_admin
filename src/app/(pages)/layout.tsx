@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useEffect, useState } from "react";
@@ -13,6 +14,11 @@ import { useRouter } from "next/navigation";
 import "../globals.css";
 import { useComplexes } from "../provider/ComplexProvider";
 import { parseAsFloat, useQueryState } from "nuqs";
+import { ComplexesProvider } from "../provider/ComplexProvider";
+import { PropertiesProvider } from "../provider/PropertiesProvider";
+import { BuildingProvider } from "../provider/BuildingProvider";
+import { UserProvider } from "../provider/UserProvider";
+
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -85,6 +91,10 @@ export default function RootLayout({
   };
 
   return (
+       <ComplexesProvider>
+          <UserProvider>
+            <BuildingProvider>
+              <PropertiesProvider>
     <div>
       <div
         className={`flex justify-between items-center px-4 py-2 ${
@@ -110,12 +120,12 @@ export default function RootLayout({
           />
         </div>
 
-        {/* <Switch
+        <Switch
           checked={theme === "dark"}
           onChange={changeTheme}
           checkedChildren="Dark"
           unCheckedChildren="Light"
-        /> */}
+        />
       </div>
 
       <div className="flex">
@@ -137,5 +147,9 @@ export default function RootLayout({
         </div>
       </div>
     </div>
+          </PropertiesProvider>
+            </BuildingProvider>
+          </UserProvider>
+        </ComplexesProvider>
   );
 }

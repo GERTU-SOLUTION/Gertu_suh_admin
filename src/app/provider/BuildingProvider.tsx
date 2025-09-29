@@ -45,20 +45,6 @@ export type Building = {
   complex: Complex;
 };
 
-// type Property = {
-//   id: number;
-//   building_number: string;
-//   floor?: string;
-//   unit_number?: string;
-//   ownership_status?: "owned" | "rented";
-//   property_type?: "residential" | "commercial";
-//   square_meters?: number;
-//   phone_number?: string;
-//   complex_id: number;
-//   complex: Complex;
-//   building: Building;
-// };
-
 const BuildingContext = createContext<buildingContextType>(
   {} as buildingContextType
 );
@@ -83,7 +69,6 @@ export const BuildingProvider = ({
       setLoading(true);
       const response = await api.get(`/buildings?${queryString}`);
       setTotalPage(response.data.meta);
-      console.log(response.data.data);
       setBuilding(response.data.data);
     } catch (error) {
       console.error("Failed to load complexes:", error);

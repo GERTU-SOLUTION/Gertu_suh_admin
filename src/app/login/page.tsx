@@ -2,9 +2,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import api from "../api";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -19,13 +19,9 @@ const Login = () => {
 
   const getLogin = async (values: { email: string; password: string }) => {
     try {
-      const response = await axios.post(
-        "https://api.gertu.mn:3000/api/auth/login",
-        values,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await api.post("/auth/login", values, {
+        withCredentials: true,
+      });
 
       if (response.data.access_token) {
         localStorage.setItem("access_token", response.data.access_token);

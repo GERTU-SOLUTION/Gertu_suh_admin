@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Table as AntTable, Button, Input, Tooltip } from "antd";
 import type { TableColumnsType } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
@@ -131,10 +131,15 @@ const CustomTable: React.FC = () => {
     bathrooms: prop?.bathrooms,
     squareMeters: prop?.square_meters,
     phoneNumber: prop?.pre_registered_phone ?? null,
+    user_id: prop?.current_owner_id ?? null,
   }));
 
+  const [userId, setUserId] = useQueryState(
+    "user",
+    parseAsFloat.withDefault(null)
+  );
   return (
-    <div className="w-full mt-10">
+    <div className="w-[70%] mt-10">
       <div className="flex justify-between items-center mb-8">
         <NumericInput
           style={{ width: 220 }}
@@ -155,6 +160,11 @@ const CustomTable: React.FC = () => {
           [&_.ant-table-tbody>tr:nth-child(even)>td]:bg-gray-50
           [&_.ant-table-tbody>tr:hover>td]:bg-blue-50
         `}
+          onRow={(record) => ({
+            onClick: () => {
+              setUserId(record.user_id);
+            },
+          })}
           pagination={{
             pageSize: totalPage?.limit,
             total: totalPage?.total,
@@ -163,7 +173,6 @@ const CustomTable: React.FC = () => {
             position: ["bottomCenter"],
           }}
           columns={columns}
-          
           dataSource={dataSource}
           scroll={{ x: "max-content", y: "max-content" }}
           bordered={false}

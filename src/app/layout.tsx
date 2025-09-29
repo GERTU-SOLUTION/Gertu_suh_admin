@@ -2,9 +2,6 @@
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 import AuthProvider from "./provider/AuthProvider";
-import { ComplexesProvider } from "./provider/ComplexProvider";
-import { PropertiesProvider } from "./provider/PropertiesProvider";
-import { BuildingProvider } from "./provider/BuildingProvider";
 
 export default function RootLayout({
   children,
@@ -14,15 +11,11 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <NuqsAdapter>
-        <ComplexesProvider>
-          <BuildingProvider>
-            <PropertiesProvider>
-              <html>
-                <body>{children}</body>
-              </html>
-            </PropertiesProvider>
-          </BuildingProvider>
-        </ComplexesProvider>
+     
+                <html>
+                  <body>{children}</body>
+                </html>
+        
       </NuqsAdapter>
     </AuthProvider>
   );
