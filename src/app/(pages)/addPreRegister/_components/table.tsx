@@ -8,6 +8,7 @@ import { Properties, useProperties } from "@/app/provider/PropertiesProvider";
 import { AnyObject } from "antd/es/_util/type";
 import { parseAsFloat, parseAsString, useQueryState } from "nuqs";
 import AddProperties from "./addProperties";
+import { useUser } from "@/app/provider/UserProvider";
 
 interface NumericInputProps {
   style: React.CSSProperties;
@@ -60,20 +61,21 @@ const NumericInput = (props: NumericInputProps) => {
 const CustomTable: React.FC = () => {
   const { properties, totalPage } = useProperties();
   const [page, setPage] = useQueryState("page", parseAsFloat.withDefault(1));
-   const [complex] = useQueryState("complex", parseAsFloat.withDefault(1));
+  const [complex] = useQueryState("complex", parseAsFloat.withDefault(1));
   const [value, setValue] = useQueryState(
     "search",
     parseAsString.withDefault("")
   );
-   const queryParams = new URLSearchParams();
-    const complexId = queryParams.get("complex");
-    const [com, setCom] = useState<string | null>(null);
-  
-    useEffect(() => {
-      if (typeof window !== "undefined") {
-        setCom(localStorage.getItem("selectedComplex"));
-      }
-    }, []);
+  const queryParams = new URLSearchParams();
+  const complexId = queryParams.get("complex");
+  const [com, setCom] = useState<string | null>(null);
+  const { GetVehicles } = useUser();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setCom(localStorage.getItem("selectedComplex"));
+    }
+  }, []);
   const columns: TableColumnsType = [
     {
       title: "№",
@@ -131,11 +133,7 @@ const CustomTable: React.FC = () => {
     },
   ];
 
-  const dataSource = properties  ?.filter(
-          (b: Properties) =>
-            b.building?.complex_id?.toString() === complexId ||
-            b.building?.complex_id?.toString() === com
-        ).map((prop) => ({
+  const dataSource = properties?.map((prop) => ({
     key: prop?.id,
     unitNumber: prop.unit_number,
     propertyType: prop.property_type,
@@ -148,12 +146,15 @@ const CustomTable: React.FC = () => {
     user_id: prop?.current_owner_id ?? null,
   }));
 
-  const [userId, setUserId] = useQueryState(
+  const [rawUserId, setRawUserId] = useQueryState(
     "user",
-    parseAsFloat.withDefault(null)
+    parseAsFloat.withDefault(NaN)
   );
+
+  const userId = Number.isNaN(rawUserId) ? null : rawUserId;
+
   return (
-    <div className="w-[70%] mt-10">
+    <div className="">
       <div className="flex justify-between items-center mb-8">
         <NumericInput
           style={{ width: 220 }}
@@ -176,7 +177,8 @@ const CustomTable: React.FC = () => {
         `}
           onRow={(record) => ({
             onClick: () => {
-              setUserId(record.user_id);
+              setRawUserId(record.user_id);
+              GetVehicles(userId);
             },
           })}
           pagination={{

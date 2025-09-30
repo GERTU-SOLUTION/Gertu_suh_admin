@@ -76,7 +76,6 @@ export const PropertiesProvider = ({
       setLoading(true);
       const response = await api.get(`/properties?${queryString}`);
       setTotalPage(response.data.meta);
-      console.log(response.data.data,"...................")
       setProperties(response.data.data);
     } catch (error) {
       console.error("Failed to load complexes:", error);
@@ -88,7 +87,6 @@ export const PropertiesProvider = ({
   const PostProperties = async (value: PropertyFormValues) => {
     try {
       const response = await api.post("/properties/pre-register", value);
-      console.log(response.data.data, "..............................");
     } catch (error) {
       console.log(error);
     }

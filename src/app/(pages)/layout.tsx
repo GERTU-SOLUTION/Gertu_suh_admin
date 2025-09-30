@@ -18,7 +18,6 @@ import { PropertiesProvider } from "../provider/PropertiesProvider";
 import { BuildingProvider } from "../provider/BuildingProvider";
 import { UserProvider } from "../provider/UserProvider";
 
-
 type MenuItem = Required<MenuProps>["items"][number];
 
 const items: MenuItem[] = [
@@ -90,63 +89,61 @@ export default function RootLayout({
   };
 
   return (
-          <UserProvider>
-            <BuildingProvider>
-              <PropertiesProvider>
-    <div>
-      <div
-        className={`flex justify-between items-center px-4 py-2 ${
-          theme === "dark" ? "bg-gray-800" : "bg-gray-100"
-        }`}
-      >
-        <div className="flex gap-2 items-center">
-          <img
-          src="./gertu_logo.png"
-            width={28}
-            alt="gertu_logo"
-          />
-          <Select
-            value={selectedComplex}
-            placeholder="Gertu"
-            style={{ width: 200 }}
-            onChange={handleChange1}
-            className="text-black"
-            options={complexes.map((complex) => ({
-              label: complex.name,
-              value: complex.id,
-            }))}
-          />
-        </div>
+    <UserProvider>
+      <BuildingProvider>
+        <PropertiesProvider>
+          <div>
+            <div
+              className={`flex justify-between items-center px-4 py-2 ${
+                theme === "dark" ? "bg-gray-800" : "bg-gray-100"
+              }`}
+            >
+              <div className="flex gap-2 items-center">
+                <img src="./gertu_logo.png" width={28} alt="gertu_logo" />
+                <Select
+                  value={selectedComplex}
+                  placeholder="Gertu"
+                  style={{ width: 200 }}
+                  onChange={handleChange1}
+                  className="text-black"
+                  options={complexes.map((complex) => ({
+                    label: complex.name,
+                    value: complex.id,
+                  }))}
+                />
+              </div>
 
-        <Switch
-          checked={theme === "dark"}
-          onChange={changeTheme}
-          checkedChildren="Dark"
-          unCheckedChildren="Light"
-        />
-      </div>
+              <Switch
+                checked={theme === "dark"}
+                onChange={changeTheme}
+                checkedChildren="Dark"
+                unCheckedChildren="Light"
+              />
+            </div>
 
-      <div className="flex">
-        <Menu
-          theme={theme}
-          onClick={onClick}
-          style={{ width: 306 }}
-          selectedKeys={[current]}
-          mode="inline"
-          items={items}
-        />
-        <div
-          className={` w-full ${
-            theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
-          } 
+            <div className="flex">
+              <Menu
+                theme={theme}
+                onClick={onClick}
+                style={{ width: 306 }}
+                selectedKeys={[current]}
+                mode="inline"
+                items={items}
+              />
+              <div
+                className={` w-full ${
+                  theme === "dark"
+                    ? "bg-gray-900 text-white"
+                    : "bg-white text-black"
+                } 
          `}
-        >
-          {children}
-        </div>
-      </div>
-    </div>
-          </PropertiesProvider>
-            </BuildingProvider>
-          </UserProvider>
+              >
+                {children}
+              </div>
+            </div>
+          </div>
+        </PropertiesProvider>
+      </BuildingProvider>
+    </UserProvider>
   );
 }

@@ -1,43 +1,49 @@
+"use client";
+
+import { useUser } from "@/app/provider/UserProvider";
 import { Table } from "antd";
 
 export const UserDeviceTable = () => {
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-      address: "10 Downing Street",
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-      address: "10 Downing Street",
-    },
-  ];
+  const { userVehicle, loading } = useUser();
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Эзэмшигчийн нэр",
+      dataIndex: "owner_name",
+      key: "owner_name",
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
+      title: "Машины марк",
+      dataIndex: "vehicle_name",
+      key: "vehicle_name",
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "Зөвшөөрөл",
+      dataIndex: "is_active",
+      key: "is_active",
+      render: (value: boolean) => (value ? "Идэвхтэй" : "Идэвхгүй"),
+    },
+    {
+      title: "Улсын дугаар",
+      dataIndex: "license_plate",
+      key: "license_plate",
     },
   ];
 
   return (
-    <div className="mt-5">
-      <p>Оршин суугчийн тээврийн хэрэгсэл</p>
-      <Table dataSource={dataSource} columns={columns} pagination={false} />
+    <div className="">
+      <p className="font-medium text-sm mb-2">
+        Оршин суугчийн тээврийн хэрэгсэл
+      </p>
+      <Table
+        rowKey="id"
+        loading={loading}
+        dataSource={Array.isArray(userVehicle) ? userVehicle : []}
+        columns={columns}
+        pagination={false}
+        bordered
+        locale={{ emptyText: "Тээврийн хэрэгсэл байхгүй" }} // custom empty text
+      />
     </div>
   );
 };
