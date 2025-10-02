@@ -18,15 +18,15 @@ export type Properties = {
   unit_number: string;
   pre_registered_phone?: string;
   current_owner_id: number;
-  building:Building;
+  building: Building;
 };
 
-export type Building={
-  complex_id:number;
-  building_name:string;
-  building_number:string;
-  ID:string;
-}
+export type Building = {
+  complex_id: number;
+  building_name: string;
+  building_number: string;
+  ID: string;
+};
 export type PropertyFormValues = {
   bathrooms: number;
   bedrooms: number;
@@ -74,7 +74,9 @@ export const PropertiesProvider = ({
       if (page !== 0) queryParams.append("page", page.toString());
       const queryString = queryParams.toString();
       setLoading(true);
-      const response = await api.get(`/properties?${queryString}`);
+      const response = await api.get(
+        `/complexes/996/properties?${queryString}`
+      );
       setTotalPage(response.data.meta);
       setProperties(response.data.data);
     } catch (error) {
