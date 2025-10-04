@@ -10,7 +10,7 @@ export type Properties = {
   bedrooms: number;
   bathrooms: number;
   square_meters: number;
-  registration_status: number;
+  registration_status: string;
   building_id: number;
   floor: string;
   ownership_status: string;
@@ -22,11 +22,12 @@ export type Properties = {
 };
 
 export type Building = {
+  id: number;
   complex_id: number;
   building_name: string;
   building_number: string;
-  ID: string;
 };
+
 export type PropertyFormValues = {
   bathrooms: number;
   bedrooms: number;
@@ -39,6 +40,7 @@ export type PropertyFormValues = {
   square_meters: number;
   unit_number: string;
 };
+
 export type TotalPages = {
   limit: number;
   page: number;
@@ -65,6 +67,8 @@ export const PropertiesProvider = ({
   const [properties, setProperties] = useState<Properties[]>([]);
   const [page] = useQueryState("page", parseAsFloat.withDefault(1));
   const [search] = useQueryState("search", parseAsString.withDefault(""));
+  const [complex] = useQueryState("complex", parseAsString.withDefault(""));
+
   const [totalPage, setTotalPage] = useState<TotalPages>();
 
   const GetProperties = async () => {
@@ -72,15 +76,17 @@ export const PropertiesProvider = ({
       const queryParams = new URLSearchParams();
       if (search !== "") queryParams.append("search", search.toString());
       if (page !== 0) queryParams.append("page", page.toString());
+
       const queryString = queryParams.toString();
       setLoading(true);
+
       const response = await api.get(
-        `/complexes/996/properties?${queryString}`
+        `/complexes/${complex}/properties?${queryString}`
       );
       setTotalPage(response.data.meta);
       setProperties(response.data.data);
     } catch (error) {
-      console.error("Failed to load complexes:", error);
+      console.error("Failed to load properties:", error);
     } finally {
       setLoading(false);
     }
@@ -89,14 +95,18 @@ export const PropertiesProvider = ({
   const PostProperties = async (value: PropertyFormValues) => {
     try {
       const response = await api.post("/properties/pre-register", value);
+      GetProperties();
     } catch (error) {
-      console.log(error);
+      console.error("Failed to post property:", error);
     }
   };
 
   useEffect(() => {
-    GetProperties();
-  }, [page, search]);
+    if (complex) {
+      GetProperties();
+    }
+  }, [page, search, complex]);
+
   return (
     <PropertiesContext.Provider
       value={{ properties, totalPage, PostProperties }}
