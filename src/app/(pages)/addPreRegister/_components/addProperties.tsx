@@ -72,7 +72,7 @@ const AddProperties: React.FC = () => {
             <Controller
               name="building_number"
               control={control}
-              defaultValue=""
+              defaultValue="1"
               render={({ field }) => <Input {...field} />}
             />
           </div>
@@ -82,7 +82,7 @@ const AddProperties: React.FC = () => {
             <Controller
               name="complex_id"
               control={control}
-              defaultValue={0}
+              defaultValue={995}
               render={({ field }) => (
                 <Input
                   type="number"

@@ -94,6 +94,7 @@ export const PropertiesProvider = ({
 
   const PostProperties = async (value: PropertyFormValues) => {
     try {
+      console.log(value);
       const response = await api.post("/properties/pre-register", value);
       GetProperties();
     } catch (error) {
